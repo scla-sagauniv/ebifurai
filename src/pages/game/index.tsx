@@ -5,6 +5,7 @@ import { data } from "./data";
 import geojson2svg from "geojson-to-svg";
 import SVG from "react-inlinesvg";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function Game() {
   const [questionNum, setQuestionNum] = useState(1);
@@ -22,6 +23,7 @@ export default function Game() {
 
   const next = () => {
     setScoreModalF(false);
+    setQuestionNum((prev) => prev + 1);
     setQuestionModalF(true);
   };
 
@@ -177,12 +179,20 @@ export default function Game() {
                   <div>スコア</div>
                   <div>{"score"}pt</div>
                 </div>
-                <button
-                  onClick={next}
-                  className="w-64 h-15 mb-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-xl"
-                >
-                  次へ
-                </button>
+                {questionNum < 5 ? (
+                  <button
+                    onClick={next}
+                    className="w-64 h-15 mb-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-xl"
+                  >
+                    次へ
+                  </button>
+                ) : (
+                  <Link href="/result">
+                    <button className="w-64 h-15 mb-3 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded text-xl">
+                      結果発表
+                    </button>
+                  </Link>
+                )}
               </div>
             </div>
           </div>
