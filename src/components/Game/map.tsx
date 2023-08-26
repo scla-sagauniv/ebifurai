@@ -11,6 +11,8 @@ const Map = () => {
         new window.google.maps.Map(ref.current, {
           center: { lat: -34.397, lng: 150.644 },
           zoom: 8,
+          disableDefaultUI: true,
+          zoomControl: true,
         })
       );
     }
