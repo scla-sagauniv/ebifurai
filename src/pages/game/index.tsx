@@ -23,6 +23,57 @@ export default function Game() {
 
   return (
     <>
+      {/* <div
+        style={{
+          width: "100%",
+          height: "100vh",
+          margin: 0,
+          padding: 0,
+          zIndex: 10,
+          position: "absolute",
+          backgroundColor: "RGBA(74,72,75,0.7)",
+        }}
+      >
+        <div
+          style={{
+            backgroundColor: "white",
+            zIndex: 15,
+            position: "absolute",
+            borderColor: "black",
+            borderWidth: "5px",
+            width: "70%",
+            height: "80px",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            borderRadius: "10%",
+            textAlign: "center",
+            display: "table",
+          }}
+        >
+          <div
+            style={{
+              display: "table-cell",
+              verticalAlign: "middle",
+            }}
+          >
+            <div style={{ fontSize: 56, fontWeight: "bold" }}>
+              第 {questionNum} 問
+            </div>
+            <SVG
+              src={svg}
+              style={{
+                transform: "rotate(180deg)",
+                margin: "30 auto",
+                height: "500",
+              }}
+            ></SVG>
+            <button className="mb-8 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-xl">
+              スタート
+            </button>
+          </div>
+        </div>
+      </div> */}
       <div
         style={{
           width: "100%",
@@ -42,7 +93,7 @@ export default function Game() {
             borderColor: "black",
             borderWidth: "5px",
             width: "70%",
-            height: "90%",
+            height: "80px",
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
@@ -51,20 +102,65 @@ export default function Game() {
             display: "table",
           }}
         >
-          <div style={{ display: "table-cell", verticalAlign: "middle" }}>
-            <div style={{ fontSize: 56, fontWeight: "bold" }}>
-              第 {questionNum} 問
+          <div
+            style={{
+              display: "table-cell",
+              verticalAlign: "middle",
+            }}
+          >
+            <div style={{ display: "flex", gap: "30px" }}>
+              <div style={{ margin: "auto" }}>
+                <div style={{ fontSize: 56, fontWeight: "bold" }}>お題</div>
+                <SVG
+                  src={svg}
+                  style={{
+                    transform: "rotate(180deg)",
+                    margin: "30 auto",
+                    height: "300",
+                  }}
+                ></SVG>
+              </div>
+              <div style={{ margin: "auto" }}>
+                <div style={{ fontSize: 56, fontWeight: "bold" }}>回答</div>
+                <SVG
+                  src={svg}
+                  style={{
+                    transform: "rotate(180deg)",
+                    margin: "30 auto",
+                    height: "300",
+                  }}
+                ></SVG>
+              </div>
             </div>
-            <SVG
-              src={svg}
+            <div
               style={{
-                transform: "rotate(180deg)",
-                margin: "30 30",
+                display: "flex",
+                justifyContent: "space-around",
+                alignItems: "end",
+                marginBottom: "15px",
               }}
-            ></SVG>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-xl">
-              スタート
-            </button>
+            >
+              <div
+                style={{
+                  fontSize: "36px",
+                  fontWeight: "bold",
+                }}
+              >
+                total: {"total"}pt
+              </div>
+              <div
+                style={{
+                  fontSize: "64px",
+                  fontWeight: "bold",
+                }}
+              >
+                <div>スコア</div>
+                <div>{"score"}pt</div>
+              </div>
+              <button className="w-64 h-15 mb-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-xl">
+                次へ
+              </button>
+            </div>
           </div>
         </div>
       </div>
