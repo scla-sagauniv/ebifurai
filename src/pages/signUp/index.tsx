@@ -1,25 +1,27 @@
 import { useState } from "react";
 import postData from "@/util/postData";
+import SignUp2 from "@/components/SignUp/signup";
 
 export default function SignUp() {
-  const [id, setId] = useState("");
-  const [idExists, setIdExists] = useState(false);
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
+  // const [id, setId] = useState("");
+  // const [idExists, setIdExists] = useState(false);
+  // const [name, setName] = useState("");
+  // const [password, setPassword] = useState("");
 
-  const signUp = async () => {
-    const body = {
-      id: id,
-      name: name,
-      password: password,
-    };
-    const { data } = await postData("/singUp", body);
-    console.log(data);
-  };
+  // const signUp = async () => {
+  //   const body = {
+  //     id: id,
+  //     name: name,
+  //     password: password,
+  //   };
+  //   const { data } = await postData("/singUp", body);
+  //   console.log(data);
+  // };
 
   return (
     <>
-      <div>
+      <SignUp2 />
+      {/* <div>
         <p>
           id :: <span>{idExists ? "already used" : "OK"}</span>
         </p>
@@ -47,7 +49,7 @@ export default function SignUp() {
         onClick={signUp}
       >
         signUp
-      </button>
+      </button> */}
     </>
   );
 }
