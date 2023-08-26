@@ -28,7 +28,10 @@
     "@types/google.visualization": "^0.0.69",
     "autoprefixer": "^10.4.15",
     "axios": "^1.4.0",
+    "geojson-to-svg": "^1.1.4",
+    "geojson2svg": "^2.0.1",
     "postcss": "^8.4.28",
+    "react-inlinesvg": "^4.0.3",
     "tailwindcss": "^3.3.3"
   }
 }
