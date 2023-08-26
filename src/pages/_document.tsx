@@ -1,4 +1,7 @@
-import { Html, Head, Main, NextScript } from 'next/document'
+import Html from "next/document";
+import Main from "next/document";
+import NextScript from "next/document";
+import Head from "next/document";
 
 export default function Document() {
   return (
@@ -9,5 +12,5 @@ export default function Document() {
         <NextScript />
       </body>
     </Html>
-  )
+  );
 }
