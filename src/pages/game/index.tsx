@@ -14,6 +14,7 @@ export default function Game() {
   const [questionCountryName, setQuestionCountryName] = useState(null);
   const [questionModalF, setQuestionModalF] = useState(true);
   const [score, setScore] = useState(0);
+  const [scoreSum, setScoreSum] = useState(0);
   const [scoreModalF, setScoreModalF] = useState(false);
   const [choicedCountry, setChoicedCountry] = useState<string>("");
   const [choicedCountryGeoJson, setChoicedCountryGeoJson] = useState(null);
@@ -29,6 +30,7 @@ export default function Game() {
     };
     const res = await postData("/geojson/compare", data);
     setScore(res["score"]);
+    setScoreSum((prev) => prev + res["score"]);
     setChoicedCountryGeoJson(res["choiced_country_geojson"]);
     setScoreModalF(true);
   };
@@ -201,7 +203,7 @@ export default function Game() {
                     fontWeight: "bold",
                   }}
                 >
-                  total: {"total"}pt
+                  total: {scoreSum}pt
                 </div>
                 <div
                   style={{
