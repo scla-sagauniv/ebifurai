@@ -1,15 +1,16 @@
 import Map from "@/components/Game/map";
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
-import { data } from "./data";
 // @ts-ignore
 import geojson2svg from "geojson-to-svg";
 import SVG from "react-inlinesvg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { axiosClient } from "@/util/client";
 
 export default function Game() {
   const [questionNum, setQuestionNum] = useState(1);
   const [questionGeoJson, setQuestionGeoJson] = useState(null);
+  const [questionCountryName, setQuestionCountryName] = useState(null);
   const [questionModalF, setQuestionModalF] = useState(true);
   const [scoreModalF, setScoreModalF] = useState(false);
 
@@ -31,11 +32,24 @@ export default function Game() {
     return <h1>{status}</h1>;
   };
 
-  const svg = geojson2svg()
-    .styles({ Polygon: { fill: "rgba(255,00,00,0.05)", stroke: "red" } })
-    .data(data)
-    .render()
-    .replace("/></g></svg>", 'stroke-width="0.15" /></g></svg>');
+  useEffect(() => {
+    (async function () {
+      const res = await axiosClient.get("/geojson/question");
+      if (res.status == 200) {
+        setQuestionGeoJson(res.data["data"]);
+        setQuestionCountryName(res.data["NAME_JA"]);
+      }
+    })();
+  }, []);
+
+  let svg;
+  if (questionGeoJson != null) {
+    svg = geojson2svg()
+      .styles({ Polygon: { fill: "rgba(255,00,00,0.05)", stroke: "red" } })
+      .data(JSON.parse(questionGeoJson))
+      .render()
+      .replace("/></g></svg>", 'stroke-width="0.15" /></g></svg>');
+  }
 
   return (
     <>
@@ -77,6 +91,7 @@ export default function Game() {
               <div style={{ fontSize: 56, fontWeight: "bold" }}>
                 第 {questionNum} 問
               </div>
+              <div style={{ fontSize: 42 }}>{questionCountryName}</div>
               <SVG
                 src={svg}
                 style={{

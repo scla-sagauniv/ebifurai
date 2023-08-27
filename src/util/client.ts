@@ -1,7 +1,7 @@
 import axiosBase from "axios";
 
 export const axiosClient = axiosBase.create({
-  baseURL: "https://nitari.dev.host/api",
+  baseURL: process.env.API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
