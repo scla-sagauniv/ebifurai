@@ -7,11 +7,12 @@ import { useRouter } from "next/router";
 export default function Exam() {
     const router = useRouter();
     const linkToHome = () => {
-        router.push("../onetimePass2");
+        router.push("examPage/onetimePass");
     };
 
-    return (
+    return (  
       <>
+        <div className="text-center text-[70px] mt-[20px]">登録の流れ</div>
         <div className="flex flex-row justify-evenly">
             <Step1 />
             <Step2 />
