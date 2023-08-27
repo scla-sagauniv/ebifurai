@@ -48,7 +48,7 @@ export default function SignUp2() {
                     <input
                     type="text"
                     value={password}
-                    placeholder="パスワードを入力してください"
+                    placeholder="passwordを入力してください"
                     onChange={(event) => setPassword(event.target.value)}
                     className="border border-black w-[450px]"
                     />
