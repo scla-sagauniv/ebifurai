@@ -6,19 +6,28 @@ import SVG from "react-inlinesvg";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { axiosClient } from "@/util/client";
+import postData from "@/util/postData";
 
 export default function Game() {
   const [questionNum, setQuestionNum] = useState(1);
   const [questionGeoJson, setQuestionGeoJson] = useState(null);
   const [questionCountryName, setQuestionCountryName] = useState(null);
   const [questionModalF, setQuestionModalF] = useState(true);
+  const [score, setScore] = useState(0);
   const [scoreModalF, setScoreModalF] = useState(false);
+  const [choicedCountry, setChoicedCountry] = useState<string>("");
 
   const start = () => {
     setQuestionModalF(false);
   };
 
-  const submit = () => {
+  const submit = async () => {
+    const data = {
+      question_country: questionCountryName,
+      choiced_country: choicedCountry,
+    };
+    const res = await postData("/geojson/compare", data);
+    setScore(res["score"]);
     setScoreModalF(true);
   };
 
@@ -192,7 +201,7 @@ export default function Game() {
                   }}
                 >
                   <div>スコア</div>
-                  <div>{"score"}pt</div>
+                  <div>{score}pt</div>
                 </div>
                 {questionNum < 5 ? (
                   <button
@@ -224,7 +233,7 @@ export default function Game() {
         }}
       >
         <Wrapper apiKey={process.env.NEXT_PUBLIC_MAP_API_KEY!} render={render}>
-          <Map></Map>
+          <Map setter={setChoicedCountry}></Map>
           <button
             onClick={submit}
             style={{

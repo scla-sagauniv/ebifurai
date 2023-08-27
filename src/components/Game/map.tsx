@@ -1,6 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 
-const Map = () => {
+type Props = {
+  setter: Dispatch<SetStateAction<string>>;
+};
+
+const Map = ({ setter }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<google.maps.Map>();
   const lastSelectedFeature = useRef<any>(null);
@@ -39,6 +43,7 @@ const Map = () => {
 
       // @ts-ignore
       map.data.addListener("click", (event) => {
+        setter(event.feature.getProperty("NAME_JA"));
         console.log(event.feature.getProperty("NAME_JA"));
         event.feature.setProperty("isSelected", true);
         if (
