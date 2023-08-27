@@ -16,6 +16,7 @@ export default function Game() {
   const [score, setScore] = useState(0);
   const [scoreModalF, setScoreModalF] = useState(false);
   const [choicedCountry, setChoicedCountry] = useState<string>("");
+  const [choicedCountryGeoJson, setChoicedCountryGeoJson] = useState(null);
 
   const start = () => {
     setQuestionModalF(false);
@@ -28,6 +29,7 @@ export default function Game() {
     };
     const res = await postData("/geojson/compare", data);
     setScore(res["score"]);
+    setChoicedCountryGeoJson(res["choiced_country_geojson"]);
     setScoreModalF(true);
   };
 
@@ -51,15 +53,22 @@ export default function Game() {
     })();
   }, [questionNum]);
 
-  let svg;
+  let qSvg;
   if (questionGeoJson != null) {
-    svg = geojson2svg()
+    qSvg = geojson2svg()
       .styles({ Polygon: { fill: "rgba(255,00,00,0.05)", stroke: "red" } })
       .data(JSON.parse(questionGeoJson))
       .render()
       .replace("/></g></svg>", 'stroke-width="0.15" /></g></svg>');
   }
-
+  let cSvg;
+  if (choicedCountryGeoJson) {
+    cSvg = geojson2svg()
+      .styles({ Polygon: { fill: "rgba(255,00,00,0.05)", stroke: "red" } })
+      .data(JSON.parse(choicedCountryGeoJson))
+      .render()
+      .replace("/></g></svg>", 'stroke-width="0.15" /></g></svg>');
+  }
   return (
     <>
       {questionModalF ? (
@@ -102,7 +111,7 @@ export default function Game() {
               </div>
               <div style={{ fontSize: 42 }}>{questionCountryName}</div>
               <SVG
-                src={svg}
+                src={qSvg}
                 style={{
                   transform: "rotate(180deg)",
                   margin: "30 auto",
@@ -158,7 +167,7 @@ export default function Game() {
                 <div style={{ margin: "auto" }}>
                   <div style={{ fontSize: 56, fontWeight: "bold" }}>お題</div>
                   <SVG
-                    src={svg}
+                    src={qSvg}
                     style={{
                       transform: "rotate(180deg)",
                       margin: "30 auto",
@@ -169,7 +178,7 @@ export default function Game() {
                 <div style={{ margin: "auto" }}>
                   <div style={{ fontSize: 56, fontWeight: "bold" }}>回答</div>
                   <SVG
-                    src={svg}
+                    src={cSvg}
                     style={{
                       transform: "rotate(180deg)",
                       margin: "30 auto",
