@@ -4,25 +4,16 @@ import { data } from "../game/data";
 // @ts-ignore
 import geojson2svg from "geojson-to-svg";
 import SVG from "react-inlinesvg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+// @ts-ignore
+import { useRouter } from "next/router";
 import Link from "next/link";
 
-type QuestionResult = {
-  question: number;
-  choiced: number;
-  score: number;
-};
-
-export default function Game() {
-  const [resultNum, setResultNum] = useState(1);
+export default function Result() {
+  const router = useRouter();
+  const [resultNum, setResultNum] = useState(0);
   const [questionGeoJson, setQuestionGeoJson] = useState(null);
-  const resultData: QuestionResult[] = [
-    { question: 123, choiced: 1234, score: 1 },
-    { question: 123, choiced: 1234, score: 2 },
-    { question: 123, choiced: 1234, score: 3 },
-    { question: 123, choiced: 1234, score: 44 },
-    { question: 123, choiced: 1234, score: 5 },
-  ];
+  const resultHistory = JSON.parse(router.query.history)["data"];
 
   const next = () => {
     setResultNum((prev) => prev + 1);
@@ -32,9 +23,20 @@ export default function Game() {
     setResultNum((prev) => prev - 1);
   };
 
-  const svg = geojson2svg()
+  let scoreSum = 0;
+  for (let result of resultHistory) {
+    scoreSum += result["score"];
+  }
+  let qSvg;
+  qSvg = geojson2svg()
     .styles({ Polygon: { fill: "rgba(255,00,00,0.05)", stroke: "red" } })
-    .data(data)
+    .data(JSON.parse(resultHistory[resultNum]["questionGeoJson"]))
+    .render()
+    .replace("/></g></svg>", 'stroke-width="0.15" /></g></svg>');
+  let cSvg;
+  cSvg = geojson2svg()
+    .styles({ Polygon: { fill: "rgba(255,00,00,0.05)", stroke: "red" } })
+    .data(JSON.parse(resultHistory[resultNum]["choicedCountryGeoJson"]))
     .render()
     .replace("/></g></svg>", 'stroke-width="0.15" /></g></svg>');
 
@@ -75,8 +77,11 @@ export default function Game() {
             <div style={{ display: "flex", gap: "30px" }}>
               <div style={{ margin: "auto" }}>
                 <div style={{ fontSize: 56, fontWeight: "bold" }}>お題</div>
+                <div style={{ fontSize: 38 }}>
+                  {resultHistory[resultNum]["questionCountryName"]}
+                </div>
                 <SVG
-                  src={svg}
+                  src={qSvg}
                   style={{
                     transform: "rotate(180deg)",
                     margin: "30 auto",
@@ -86,8 +91,11 @@ export default function Game() {
               </div>
               <div style={{ margin: "auto" }}>
                 <div style={{ fontSize: 56, fontWeight: "bold" }}>回答</div>
+                <div style={{ fontSize: 38 }}>
+                  {resultHistory[resultNum]["choicedCountry"]}
+                </div>
                 <SVG
-                  src={svg}
+                  src={cSvg}
                   style={{
                     transform: "rotate(180deg)",
                     margin: "30 auto",
@@ -104,7 +112,7 @@ export default function Game() {
                 marginBottom: "15px",
               }}
             >
-              {resultNum > 1 ? (
+              {resultNum > 0 ? (
                 <button
                   onClick={prev}
                   className="w-32 h-15 mb-3 bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded text-xl"
@@ -123,9 +131,9 @@ export default function Game() {
                 }}
               >
                 <div>スコア</div>
-                <div>{"score"}pt</div>
+                <div>{resultHistory[resultNum]["score"]}pt</div>
               </div>
-              {resultNum < 5 ? (
+              {resultNum < 4 ? (
                 <button
                   onClick={next}
                   className="w-32 h-15 mb-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-xl"
@@ -153,7 +161,7 @@ export default function Game() {
                 paddingLeft: "30px",
               }}
             >
-              {"score"}pt
+              {scoreSum}pt
             </div>
             <div
               style={{
