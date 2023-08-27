@@ -8,7 +8,7 @@ export default function OTP2() {
             </div>
             <div className="flex flex-row justify-between w-[800px] mt-[30px]">
               <a href="../" className="text-[30px] underline text-blue-600 hover:text-blue-400">←説明</a>
-              <a href="../topPage" className="text-[30px] border rounded bg-gray-300 hover:bg-gray-200 border-black px-[20px] py-[2px]">submit</a>
+              <a href="../../topPage" className="text-[30px] border rounded bg-gray-300 hover:bg-gray-200 border-black px-[20px] py-[2px]">submit</a>
             </div>
         </div>
       </>

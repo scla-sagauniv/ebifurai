@@ -7,10 +7,10 @@ import { useRouter } from "next/router";
 export default function Exam() {
     const router = useRouter();
     const linkToHome = () => {
-        router.push("../onetimePass2");
+        router.push("examPage/onetimePass");
     };
 
-    return (
+    return (  
       <>
         <div className="flex flex-row justify-evenly">
             <Step1 />
