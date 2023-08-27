@@ -24,10 +24,18 @@
     "typescript": "5.2.2"
   },
   "devDependencies": {
+    "@googlemaps/js-api-loader": "^1.16.2",
+    "@googlemaps/react-wrapper": "^1.1.35",
+    "@googlemaps/typescript-guards": "^2.0.3",
     "@radix-ui/themes": "^1.1.2",
+    "@types/google.maps": "^3.54.0",
+    "@types/google.visualization": "^0.0.69",
     "autoprefixer": "^10.4.15",
     "axios": "^1.4.0",
+    "geojson-to-svg": "^1.1.4",
+    "geojson2svg": "^2.0.1",
     "postcss": "^8.4.28",
+    "react-inlinesvg": "^4.0.3",
     "tailwindcss": "^3.3.3"
   }
 }
