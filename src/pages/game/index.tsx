@@ -40,7 +40,7 @@ export default function Game() {
         setQuestionCountryName(res.data["NAME_JA"]);
       }
     })();
-  }, []);
+  }, [questionNum]);
 
   let svg;
   if (questionGeoJson != null) {
