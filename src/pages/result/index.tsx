@@ -23,7 +23,10 @@ export default function Result() {
     setResultNum((prev) => prev - 1);
   };
 
-  console.log(resultHistory);
+  let scoreSum = 0;
+  for (let result of resultHistory) {
+    scoreSum += result["score"];
+  }
   let qSvg;
   qSvg = geojson2svg()
     .styles({ Polygon: { fill: "rgba(255,00,00,0.05)", stroke: "red" } })
@@ -128,7 +131,7 @@ export default function Result() {
                 }}
               >
                 <div>スコア</div>
-                <div>{"score"}pt</div>
+                <div>{resultHistory[resultNum]["score"]}pt</div>
               </div>
               {resultNum < 4 ? (
                 <button
@@ -158,7 +161,7 @@ export default function Result() {
                 paddingLeft: "30px",
               }}
             >
-              {"score"}pt
+              {scoreSum}pt
             </div>
             <div
               style={{
