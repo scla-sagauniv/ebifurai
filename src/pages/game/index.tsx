@@ -18,6 +18,7 @@ export default function Game() {
   const [scoreModalF, setScoreModalF] = useState(false);
   const [choicedCountry, setChoicedCountry] = useState<string>("");
   const [choicedCountryGeoJson, setChoicedCountryGeoJson] = useState(null);
+  const [history, setHistory] = useState([]);
 
   const start = () => {
     setQuestionModalF(false);
@@ -32,6 +33,21 @@ export default function Game() {
     setScore(res["score"]);
     setScoreSum((prev) => prev + res["score"]);
     setChoicedCountryGeoJson(res["choiced_country_geojson"]);
+    // @ts-ignore
+    setHistory((prev) => {
+      console.log(prev);
+
+      return [
+        ...prev,
+        {
+          questionGeoJson: questionGeoJson,
+          questionCountryName: questionCountryName,
+          choicedCountryGeoJson: res["choiced_country_geojson"],
+          choicedCountry: choicedCountry,
+          score: res["score"],
+        },
+      ];
+    });
     setScoreModalF(true);
   };
 
@@ -168,6 +184,7 @@ export default function Game() {
               <div style={{ display: "flex", gap: "30px" }}>
                 <div style={{ margin: "auto" }}>
                   <div style={{ fontSize: 56, fontWeight: "bold" }}>お題</div>
+                  <div style={{ fontSize: 38 }}>{questionCountryName}</div>
                   <SVG
                     src={qSvg}
                     style={{
@@ -179,6 +196,7 @@ export default function Game() {
                 </div>
                 <div style={{ margin: "auto" }}>
                   <div style={{ fontSize: 56, fontWeight: "bold" }}>回答</div>
+                  <div style={{ fontSize: 38 }}>{choicedCountry}</div>
                   <SVG
                     src={cSvg}
                     style={{
@@ -222,7 +240,13 @@ export default function Game() {
                     次へ
                   </button>
                 ) : (
-                  <Link href="/result">
+                  <Link
+                    href={{
+                      pathname: "result",
+                      query: { history: JSON.stringify({ data: history }) },
+                    }}
+                    as="result"
+                  >
                     <button className="w-64 h-15 mb-3 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded text-xl">
                       結果発表
                     </button>
