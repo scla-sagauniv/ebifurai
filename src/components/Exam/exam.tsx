@@ -12,6 +12,7 @@ export default function Exam() {
 
     return (  
       <>
+        <div className="text-center text-[70px] mt-[20px]">登録の流れ</div>
         <div className="flex flex-row justify-evenly">
             <Step1 />
             <Step2 />
